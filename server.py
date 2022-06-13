@@ -37,6 +37,9 @@ def main():
             msg = command
             clientsocket.send(msg.encode('ascii'))
     
+            if command == 'exit':
+                break
+
         clientsocket.close()
 
 if __name__ == '__main__':

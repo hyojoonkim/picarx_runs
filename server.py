@@ -21,7 +21,6 @@ def main():
     # queue up to 5 requests
     serversocket.listen(5)                                           
     
-    
     while True:
         # establish a connection
         clientsocket,addr = serversocket.accept()      
@@ -33,9 +32,12 @@ def main():
     
         # INPUT cycle
         while True:
-            command = input("Enter command (f <duration>, b <duration>, speed <amount>, linetrack: ")
+            command = input("Enter command (f <duration>, b <duration>, speed <amount>, linetrack, exit): ")
             msg = command
             clientsocket.send(msg.encode('ascii'))
+
+            if command == 'exit':
+                break
     
         clientsocket.close()
 

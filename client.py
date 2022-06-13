@@ -2,6 +2,7 @@
 
 import socket
 from picarx import Picarx
+import time
 
 PORT = 9999
 
@@ -40,7 +41,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     # get local machine name
-    host = socket.gethostname()
+    host = '10.64.11.2'
     
     # connection to hostname on the port.
     s.connect((host, PORT))
@@ -65,7 +66,7 @@ def main():
                     duration = cmd_split[1]
 
                     px.forward(px_power)
-                    time.sleep(duration)
+                    time.sleep(int(duration))
                     px.stop()
 
             elif command.startswith('b '):
@@ -74,7 +75,7 @@ def main():
                     duration = cmd_split[1]
 
                     px.backward(px_power)
-                    time.sleep(duration)
+                    time.sleep(int(duration))
                     px.stop()
 
             elif command == 'linetrack':
@@ -83,10 +84,14 @@ def main():
             elif command.startswith('speed '):
                 cmd_split = command.split(' ')
                 if len(cmd_split) == 2:
-                    px_power = cmd_split[1]
-
+                    px_power = int(cmd_split[1])
+            elif command == 'exit':
+                s.close()
+                break
             else:
                 print ("Unrecognized command. Do nothing.\n")
+    finally:
+        s.close()
 
     s.close()
 

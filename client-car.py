@@ -113,6 +113,7 @@ def main():
                 cmd_split = command.split(' ')
                 if len(cmd_split) == 2:
                     px_power = int(cmd_split[1])
+
             elif command == 'exit':
                 s.close()
                 break

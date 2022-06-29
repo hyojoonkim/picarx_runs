@@ -22,6 +22,9 @@ def main():
     serversocket.listen(5)                                           
     
     while True:
+
+        print("Waiting for a client to connect....\n")
+
         # establish a connection
         clientsocket,addr = serversocket.accept()      
      
@@ -32,16 +35,14 @@ def main():
     
         # INPUT cycle
         while True:
-            command = input("Enter command (f <duration>, b <duration>, speed <amount>, linetrack, exit): ")
+            command = input("Enter command (f <duration>, b <duration>, speed <amount>, linetrack <duration>, exit): ")
             msg = command
             clientsocket.send(msg.encode('ascii'))
 
             if command == 'exit':
+                print("Disconnecting client: {}\n".format(str(addr)))
                 break
     
-            if command == 'exit':
-                break
-
         clientsocket.close()
 
 if __name__ == '__main__':

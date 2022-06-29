@@ -44,6 +44,10 @@ def linetrack(px_power=10, duration=0):
         if duration != 0 and is_time_up(end):
             break
 
+        # To configure line check frequency. Do it every 0.05 seconds.
+        # This is to reduce the number of while loop cycles, hoping to save power.
+        time.sleep(0.05)
+
   finally:
       px.stop()
 
@@ -103,9 +107,7 @@ def main():
                 if len(cmd_split) == 2:
                     duration = cmd_split[1]
 
-                    linetrack(px_power=px_power)
-                    time.sleep(int(duration))
-                    px.forward(0)
+                    linetrack(px_power=px_power, duration=duration)
 
             elif command.startswith('speed '):
                 cmd_split = command.split(' ')

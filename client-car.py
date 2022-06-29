@@ -36,7 +36,7 @@ def linetrack(px_power=10, duration=0):
             px.forward(px_power) 
         else:
             px.set_dir_servo_angle(0)
-            px.stop()
+            px.forward(0)
 
         # Check if time is up.
         # If duration is 0, that means go on forever until end of tape is detected.
@@ -49,7 +49,7 @@ def linetrack(px_power=10, duration=0):
         time.sleep(0.05)
 
   finally:
-      px.stop()
+      px.forward(0)
 
 
 def main():

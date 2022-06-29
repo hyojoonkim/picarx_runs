@@ -1,6 +1,7 @@
 #!/usr/bin/python3           # This is client.py file
 
 import socket
+import argparse
 from picarx import Picarx
 import time
 
@@ -35,14 +36,20 @@ def linetrack(px_power):
       px.stop()
 
 def main():
-
     
+    parser = argparse.ArgumentParser(description='Script for running PiCarX client')
+    parser.add_argument('-d', dest='dest_ip', action='store', required=True,
+            help='Destination IP address (numerical)')
+
+    # Parse
+    args = parser.parse_args()
+
+    # get local machine name
+    host = args.dest_ip
+
     # create a socket object
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    
-    # get local machine name
-    host = '10.64.11.2'
-    
+   
     # connection to hostname on the port.
     s.connect((host, PORT))
 

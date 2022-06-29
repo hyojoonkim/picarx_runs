@@ -87,7 +87,7 @@ def main():
 
                     px.forward(px_power)
                     time.sleep(int(duration))
-                    px.stop()
+                    px.forward(0)
 
             elif command.startswith('b '):
                 cmd_split = command.split(' ')
@@ -96,7 +96,7 @@ def main():
 
                     px.backward(px_power)
                     time.sleep(int(duration))
-                    px.stop()
+                    px.forward(0)
 
             elif command == 'linetrack':
                 cmd_split = command.split(' ')
@@ -105,7 +105,7 @@ def main():
 
                     linetrack(px_power=px_power)
                     time.sleep(int(duration))
-                    px.stop()
+                    px.forward(0)
 
             elif command.startswith('speed '):
                 cmd_split = command.split(' ')

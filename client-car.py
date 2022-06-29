@@ -7,10 +7,18 @@ import time
 
 PORT = 9999
 
-def linetrack(px_power):
+def is_time_up(end):
+    now = time.time()
+    return True if end < now else False
+
+
+def linetrack(px_power=10, duration=0):
   try:
     px = Picarx()
-    # px = Picarx(grayscale_pins=['A0', 'A1', 'A2']) 
+    # px = Picarx(grayscale_pins=['A0', 'A1', 'A2'])
+
+    start = time.time()
+    end = start + duration 
 
     while True:
         gm_val_list = px.get_grayscale_data()
@@ -19,21 +27,26 @@ def linetrack(px_power):
         print("gm_status:",gm_status)
 
         if gm_status == 'forward':
-            print(1)
             px.forward(px_power) 
-
         elif gm_status == 'left':
             px.set_dir_servo_angle(12)
             px.forward(px_power) 
-
         elif gm_status == 'right':
             px.set_dir_servo_angle(-12)
             px.forward(px_power) 
         else:
             px.set_dir_servo_angle(0)
             px.stop()
+
+        # Check if time is up.
+        # If duration is 0, that means go on forever until end of tape is detected.
+        # So, only check if duration is not zero.
+        if duration != 0 and is_time_up(end):
+            break
+
   finally:
       px.stop()
+
 
 def main():
     
@@ -86,7 +99,13 @@ def main():
                     px.stop()
 
             elif command == 'linetrack':
-                linetrack()
+                cmd_split = command.split(' ')
+                if len(cmd_split) == 2:
+                    duration = cmd_split[1]
+
+                    linetrack(px_power=px_power)
+                    time.sleep(int(duration))
+                    px.stop()
 
             elif command.startswith('speed '):
                 cmd_split = command.split(' ')
@@ -101,6 +120,7 @@ def main():
         s.close()
 
     s.close()
+
 
 if __name__ == '__main__':
     main()

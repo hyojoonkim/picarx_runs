@@ -39,6 +39,9 @@ def main():
             if command == 'exit':
                 break
     
+            if command == 'exit':
+                break
+
         clientsocket.close()
 
 if __name__ == '__main__':

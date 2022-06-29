@@ -18,7 +18,7 @@ def linetrack(px_power=10, duration=0):
     # px = Picarx(grayscale_pins=['A0', 'A1', 'A2'])
 
     start = time.time()
-    end = start + duration 
+    end = start + float(duration)
 
     while True:
         gm_val_list = px.get_grayscale_data()

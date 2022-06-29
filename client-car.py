@@ -98,7 +98,7 @@ def main():
                     time.sleep(int(duration))
                     px.forward(0)
 
-            elif command == 'linetrack':
+            elif command.startswith('linetrack '):
                 cmd_split = command.split(' ')
                 if len(cmd_split) == 2:
                     duration = cmd_split[1]
